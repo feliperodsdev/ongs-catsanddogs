@@ -17,4 +17,14 @@ describe("Login Router", () => {
     const httpResponse = sut.route(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
   });
+  it("Should return 400 if no password is provided", () => {
+    const sut = new LoginRouter();
+    const httpRequest = {
+      body: {
+        username: "any_username",
+      },
+    };
+    const httpResponse = sut.route(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+  });
 });

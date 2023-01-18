@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Service_point {
+  id           Int           @id @default(autoincrement())
+  animals      Animal[]
+  transactions Transaction[]
+  user         User[]
+  desc         String
+  name         String
+
+  @@map("service_points")
+}
+
+model User {
+  id               Int           @id @default(autoincrement())
+  name             String
+  username         String        @unique
+  password         String
+  type             Int           @default(2)
+  Service_point    Service_point @relation(fields: [service_point_id], references: [id])
+  service_point_id Int @default(0)
+
+  @@map("users")
+}
+
+model Animal {
+  id               Int           @id @default(autoincrement())
+  name             String
+  specie           Int
+  weight           Float
+  sickness         Boolean
+  desc             String?
+  castrated        Boolean
+  breed            String
+  arrivedDate      DateTime      @db.Date
+  Service_point    Service_point @relation(fields: [service_point_id], references: [id])
+  service_point_id Int
+
+  @@map("animals")
+}
+
+model Transaction {
+  id               Int           @id @default(autoincrement())
+  type             Int
+  desc             String?
+  value            Float
+  discharge_date   DateTime      @db.Date
+  Service_point    Service_point @relation(fields: [service_point_id], references: [id])
+  service_point_id Int
+
+  @@map("transactions")
+}

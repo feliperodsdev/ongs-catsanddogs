@@ -1,7 +1,13 @@
 class LoginRouter {
   route(httpRequest: any) {
+    const { username, password } = httpRequest.body;
+    if (!username || !password) {
+      return {
+        statusCode: 400,
+      };
+    }
     return {
-      statusCode: 400,
+      statusCode: 200,
     };
   }
 }

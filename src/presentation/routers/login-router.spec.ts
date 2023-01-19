@@ -2,11 +2,25 @@ import LoginRouter from "./Login-router";
 import { MissingParamError } from "../helpers/Missing-param-error";
 import { AuthUserParams } from "./interfaces/authParams";
 import { IAuthService } from "./interfaces/authService";
+import { InvalidCredentialError } from "../helpers/Invalid-credential-error";
 
 const makeSut = () => {
   class AuthService implements IAuthService {
     async auth(params: AuthUserParams) {
-      return params;
+      const type = "Bearer";
+      if (
+        params.password == "invalid_password" &&
+        params.username == "invalid_username"
+      ) {
+        return {
+          type: type,
+          token: undefined,
+        };
+      }
+      return {
+        type: type,
+        token: "any_token",
+      };
     }
   }
   const authService = new AuthService();
@@ -45,5 +59,23 @@ describe("Login Router", () => {
     const httpRequest = {};
     const httpResponse = await sut.route(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
+  });
+  it("Should return 401 if invalid credentials provided", async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: { username: "invalid_username", password: "invalid_password" },
+    };
+    const httpResponse = await sut.route(httpRequest);
+    expect(httpResponse.statusCode).toBe(401);
+    expect(httpResponse.body).toEqual(new InvalidCredentialError());
+  });
+  it("Should return 200 if valid credentials are provided", async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: { username: "valid_username", password: "valid_password" },
+    };
+    const httpResponse = await sut.route(httpRequest);
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual({ type: "Bearer", token: "any_token" });
   });
 });

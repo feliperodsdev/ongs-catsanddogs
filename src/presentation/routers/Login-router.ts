@@ -1,6 +1,7 @@
 import HttpResponse from "../helpers/Http-response";
 import { AuthUserParams } from "./interfaces/authParams";
 import { IAuthService } from "./interfaces/authService";
+import { IToken } from "./interfaces/token";
 
 export default class LoginRouter {
   private authService: IAuthService;
@@ -23,7 +24,8 @@ export default class LoginRouter {
       }
     }
 
-    this.authService.auth(httpRequest.body);
-    return HttpResponse.ok<string>("");
+    const token = await this.authService.auth(httpRequest.body);
+    if (!token.token) return HttpResponse.invalidCredentials();
+    return HttpResponse.ok<IToken>(token);
   }
 }

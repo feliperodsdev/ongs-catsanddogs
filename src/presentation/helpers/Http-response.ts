@@ -1,5 +1,5 @@
 import { InvalidCredentialError } from "./Invalid-credential-error";
-import { MissingParamError } from "./Missing-param-error";
+import { MissingParamError } from "../../utils/errors/Missing-param-error";
 
 export default class HttpResponse {
   static badRequest(paramName: string) {

@@ -1,9 +1,10 @@
-import { AuthUserParams } from "../../presentation/routers/interfaces/authParams";
-import { IAuthService } from "../../presentation/routers/interfaces/authService";
+import { IAuthUserParams } from "./interfaces/authParams";
+import { IAuthService } from "./interfaces/authService";
+import { ILoadUserByUsernameRepository } from "./interfaces/loadUserByUsernameRepository";
 
 const makeSut = () => {
   class AuthService implements IAuthService {
-    async auth(params: AuthUserParams) {
+    async auth(params: IAuthUserParams) {
       const type = "Bearer";
       if (
         params.password == "invalid_password" &&
@@ -20,7 +21,19 @@ const makeSut = () => {
       };
     }
   }
-  return new AuthService();
+
+  class LoadUserByUsernameRepository implements ILoadUserByUsernameRepository {
+    async load(username: string) {
+      throw new Error("Method not implemented.");
+    }
+  }
+
+  const sut = new AuthService();
+
+  return {
+    sut,
+    LoadUserByUsernameRepository,
+  };
 };
 
 describe("Auth Service", () => {});

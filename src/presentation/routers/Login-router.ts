@@ -1,7 +1,7 @@
 import HttpResponse from "../helpers/Http-response";
-import { AuthUserParams } from "./interfaces/authParams";
-import { IAuthService } from "./interfaces/authService";
-import { IToken } from "./interfaces/token";
+import { IAuthUserParams } from "../../domain/services/interfaces/authParams";
+import { IAuthService } from "../../domain/services/interfaces/authService";
+import { IToken } from "../../domain/services/interfaces/token";
 
 export default class LoginRouter {
   private authService: IAuthService;
@@ -18,7 +18,7 @@ export default class LoginRouter {
 
       for (const field of requiredFields) {
         if (
-          !httpRequest?.body?.[field as keyof AuthUserParams] ||
+          !httpRequest?.body?.[field as keyof IAuthUserParams] ||
           field.trim() == ""
         ) {
           return HttpResponse.badRequest(field);

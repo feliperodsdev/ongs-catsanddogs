@@ -1,12 +1,12 @@
 import LoginRouter from "./Login-router";
 import { MissingParamError } from "../../utils/errors/Missing-param-error";
-import { AuthUserParams } from "./interfaces/authParams";
-import { IAuthService } from "./interfaces/authService";
+import { IAuthUserParams } from "../../domain/services/interfaces/authParams";
+import { IAuthService } from "../../domain/services/interfaces/authService";
 import { InvalidCredentialError } from "../../utils/errors/Invalid-credential-error";
 
 const makeSut = () => {
   class AuthService implements IAuthService {
-    async auth(params: AuthUserParams) {
+    async auth(params: IAuthUserParams) {
       const type = "Bearer";
       if (
         params.password == "invalid_password" &&

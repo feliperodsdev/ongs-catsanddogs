@@ -1,3 +1,4 @@
+import { InvalidCredentialError } from "./Invalid-credential-error";
 import { MissingParamError } from "./Missing-param-error";
 
 export default class HttpResponse {
@@ -5,6 +6,12 @@ export default class HttpResponse {
     return {
       statusCode: 400,
       body: new MissingParamError(paramName),
+    };
+  }
+  static invalidCredentials() {
+    return {
+      statusCode: 401,
+      body: new InvalidCredentialError(),
     };
   }
   static serverError() {

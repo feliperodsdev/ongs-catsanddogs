@@ -4,6 +4,10 @@ import { ILoadUserByUsernameRepository } from "./interfaces/loadUserByUsernameRe
 
 const makeSut = () => {
   class AuthService implements IAuthService {
+    private loadUserByUsernameRepository: ILoadUserByUsernameRepository;
+    constructor(loadUserByUsernameRepository: ILoadUserByUsernameRepository) {
+      this.loadUserByUsernameRepository = loadUserByUsernameRepository;
+    }
     async auth(params: IAuthUserParams) {
       const type = "Bearer";
       if (
@@ -28,7 +32,7 @@ const makeSut = () => {
     }
   }
 
-  const sut = new AuthService();
+  const sut = new AuthService(new LoadUserByUsernameRepository());
 
   return {
     sut,

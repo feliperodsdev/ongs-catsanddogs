@@ -1,6 +1,6 @@
 class LoginRouter {
   route(httpRequest: any) {
-    if (!httpRequest) {
+    if (!httpRequest.body) {
       return {
         statusCode: 500,
       };
@@ -13,6 +13,19 @@ class LoginRouter {
     }
     return {
       statusCode: 200,
+    };
+  }
+}
+
+class HttpResponse {
+  static badRequest() {
+    return {
+      statusCode: 400,
+    };
+  }
+  static serverError() {
+    return {
+      statusCode: 500,
     };
   }
 }
@@ -42,6 +55,6 @@ describe("Login Router", () => {
     const sut = new LoginRouter();
     const httpRequest = {};
     const httpResponse = sut.route(httpRequest);
-    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.statusCode).toBe(500);
   });
 });

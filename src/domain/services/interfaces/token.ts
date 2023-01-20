@@ -1,4 +1,4 @@
 export interface IToken {
-  type: string;
-  token: string | undefined;
+  type: string | null;
+  token: string | null;
 }

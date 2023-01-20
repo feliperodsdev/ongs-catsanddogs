@@ -7,6 +7,7 @@ const makeSut = () => {
   class AuthService implements IAuthService {
     private loadUserByUsernameRepository: ILoadUserByUsernameRepository;
     private encrypterPassword: IEncrypterPassword;
+
     constructor(
       loadUserByUsernameRepository: ILoadUserByUsernameRepository,
       encrypterPassword: IEncrypterPassword
@@ -14,35 +15,37 @@ const makeSut = () => {
       this.loadUserByUsernameRepository = loadUserByUsernameRepository;
       this.encrypterPassword = encrypterPassword;
     }
+
     async auth(params: IAuthUserParams) {
       const type = "Bearer";
       const user = await this.loadUserByUsernameRepository.load(
         params.username
       );
-      if (!user) {
-        return {
-          type: null,
-          token: null,
-        };
-      } else {
-        const isPasswordValid = await this.encrypterPassword.compare(
-          params.password,
-          user.password
-        );
+      const isValid =
+        user &&
+        (await this.encrypterPassword.compare(params.password, user.password));
+
+      if (isValid) {
         return {
           type: type,
           token: "any_token",
         };
       }
+
+      return {
+        type: null,
+        token: null,
+      };
     }
   }
 
   class EncrypterPassword implements IEncrypterPassword {
     async hash(password: string): Promise<string> {
-      throw new Error("Method not implemented.");
+      return password + "#";
     }
     async compare(password: string, hashedPassword: string): Promise<boolean> {
-      throw new Error("Method not implemented.");
+      if (password == hashedPassword) return true;
+      return false;
     }
   }
 
@@ -57,7 +60,7 @@ const makeSut = () => {
           id: 2,
           name: "Felipe",
           username: "liberty",
-          password: "NIFJEWNFOWEJPOQWE748392#ORIEJGER",
+          password: "valid_password",
           type: 1,
           service_point: 0,
         };
@@ -87,7 +90,8 @@ describe("Auth Service", () => {
     expect(token.token).toEqual(null);
     expect(token.type).toEqual(null);
   });
-  it("Should return token equals 'any_token' and type null if user is not find", async () => {
+
+  it("Should return token equals null and type null if user is not find", async () => {
     const { sut } = makeSut();
     const token = await sut.auth({
       username: "invalid_username",
@@ -95,5 +99,25 @@ describe("Auth Service", () => {
     });
     expect(token.token).toEqual(null);
     expect(token.type).toEqual(null);
+  });
+
+  it("Should return token equals null and type null if password is invalid", async () => {
+    const { sut } = makeSut();
+    const token = await sut.auth({
+      username: "valid_username",
+      password: "invalid_password",
+    });
+    expect(token.token).toEqual(null);
+    expect(token.type).toEqual(null);
+  });
+
+  it("Should return token if username and hashedPassword matchs", async () => {
+    const { sut } = makeSut();
+    const token = await sut.auth({
+      username: "valid_username",
+      password: "valid_password",
+    });
+    expect(token.token).toEqual("any_token");
+    expect(token.type).toEqual("Bearer");
   });
 });

@@ -2,18 +2,23 @@ import { IAuthUserParams } from "./interfaces/authParams";
 import { IAuthService } from "./interfaces/authService";
 import { IEncrypterPassword } from "./interfaces/encrypterPassword";
 import { ILoadUserByUsernameRepository } from "./interfaces/loadUserByUsernameRepository";
+import { ITokenGenerator } from "./interfaces/tokenGenerator";
+import { ITokenInfo } from "./interfaces/tokenInfo";
 
 const makeSut = () => {
   class AuthService implements IAuthService {
     private loadUserByUsernameRepository: ILoadUserByUsernameRepository;
     private encrypterPassword: IEncrypterPassword;
+    private tokenGenerator: ITokenGenerator;
 
     constructor(
       loadUserByUsernameRepository: ILoadUserByUsernameRepository,
-      encrypterPassword: IEncrypterPassword
+      encrypterPassword: IEncrypterPassword,
+      tokenGenerator: ITokenGenerator
     ) {
       this.loadUserByUsernameRepository = loadUserByUsernameRepository;
       this.encrypterPassword = encrypterPassword;
+      this.tokenGenerator = tokenGenerator;
     }
 
     async auth(params: IAuthUserParams) {
@@ -26,9 +31,12 @@ const makeSut = () => {
         (await this.encrypterPassword.compare(params.password, user.password));
 
       if (isValid) {
+        const token = await this.tokenGenerator.generateToken({
+          user_id: user.id,
+        });
         return {
           type: type,
-          token: "any_token",
+          token: token,
         };
       }
 
@@ -39,7 +47,7 @@ const makeSut = () => {
     }
   }
 
-  class EncrypterPassword implements IEncrypterPassword {
+  class EncrypterPasswordSpy implements IEncrypterPassword {
     async hash(password: string): Promise<string> {
       return password + "#";
     }
@@ -68,15 +76,26 @@ const makeSut = () => {
     }
   }
 
+  class TokenGeneratorSpy implements ITokenGenerator {
+    async generateToken(params: ITokenInfo): Promise<string> {
+      return "any_token";
+    }
+    async decryptToken(params: string): Promise<ITokenInfo> {
+      return { user_id: 2 };
+    }
+  }
+
   const sut = new AuthService(
     new LoadUserByUsernameRepositorySpy(),
-    new EncrypterPassword()
+    new EncrypterPasswordSpy(),
+    new TokenGeneratorSpy()
   );
 
   return {
     sut,
     LoadUserByUsernameRepositorySpy,
-    EncrypterPassword,
+    EncrypterPasswordSpy,
+    TokenGeneratorSpy,
   };
 };
 
@@ -112,12 +131,16 @@ describe("Auth Service", () => {
   });
 
   it("Should return token if username and hashedPassword matchs", async () => {
-    const { sut } = makeSut();
+    const { sut, TokenGeneratorSpy } = makeSut();
     const token = await sut.auth({
       username: "valid_username",
       password: "valid_password",
     });
-    expect(token.token).toEqual("any_token");
+    const tokenGenerator = new TokenGeneratorSpy();
+    const returnTokenGenerator = await tokenGenerator.generateToken({
+      user_id: 2,
+    });
+    expect(token.token).toEqual(returnTokenGenerator);
     expect(token.type).toEqual("Bearer");
   });
 });

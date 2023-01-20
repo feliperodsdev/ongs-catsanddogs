@@ -1,43 +1,103 @@
 import { IAuthUserParams } from "./interfaces/authParams";
 import { IAuthService } from "./interfaces/authService";
+import { IEncrypterPassword } from "./interfaces/encrypterPassword";
 import { ILoadUserByUsernameRepository } from "./interfaces/loadUserByUsernameRepository";
 
 const makeSut = () => {
   class AuthService implements IAuthService {
     private loadUserByUsernameRepository: ILoadUserByUsernameRepository;
-    constructor(loadUserByUsernameRepository: ILoadUserByUsernameRepository) {
+    private encrypterPassword: IEncrypterPassword;
+    constructor(
+      loadUserByUsernameRepository: ILoadUserByUsernameRepository,
+      encrypterPassword: IEncrypterPassword
+    ) {
       this.loadUserByUsernameRepository = loadUserByUsernameRepository;
+      this.encrypterPassword = encrypterPassword;
     }
     async auth(params: IAuthUserParams) {
       const type = "Bearer";
-      if (
-        params.password == "invalid_password" &&
-        params.username == "invalid_username"
-      ) {
+      const searchUser = await this.loadUserByUsernameRepository.load(
+        params.username
+      );
+      if (searchUser.result == "error" || searchUser.data == undefined) {
+        return {
+          type: null,
+          token: null,
+        };
+      } else {
+        const isPasswordValid = await this.encrypterPassword.compare(
+          params.password,
+          searchUser.data.password
+        );
         return {
           type: type,
-          token: undefined,
+          token: "any_token",
         };
       }
-      return {
-        type: type,
-        token: "any_token",
-      };
     }
   }
 
-  class LoadUserByUsernameRepository implements ILoadUserByUsernameRepository {
-    async load(username: string) {
+  class EncrypterPassword implements IEncrypterPassword {
+    async hash(password: string): Promise<string> {
+      throw new Error("Method not implemented.");
+    }
+    async compare(password: string, hashedPassword: string): Promise<boolean> {
       throw new Error("Method not implemented.");
     }
   }
 
-  const sut = new AuthService(new LoadUserByUsernameRepository());
+  class LoadUserByUsernameRepositorySpy
+    implements ILoadUserByUsernameRepository
+  {
+    async load(username: string) {
+      if (username == "invalid_username") {
+        return {
+          result: "error",
+          data: undefined,
+        };
+      } else
+        return {
+          result: "sucess",
+          data: {
+            id: 1,
+            name: "Felipe",
+            username: "liberty",
+            password: "NIFJEWNFOWEJPOQWE748392#ORIEJGER",
+            type: 1,
+            service_point: 0,
+          },
+        };
+    }
+  }
+
+  const sut = new AuthService(
+    new LoadUserByUsernameRepositorySpy(),
+    new EncrypterPassword()
+  );
 
   return {
     sut,
-    LoadUserByUsernameRepository,
+    LoadUserByUsernameRepositorySpy,
   };
 };
 
-describe("Auth Service", () => {});
+describe("Auth Service", () => {
+  it("Should return token and type null if user is not find", async () => {
+    const { sut } = makeSut();
+    const token = await sut.auth({
+      username: "invalid_username",
+      password: "any_password",
+    });
+    expect(token.token).toEqual(null);
+    expect(token.type).toEqual(null);
+  });
+  it("Should return token equals 'any_token' and type null if user is not find", async () => {
+    const { sut } = makeSut();
+    const token = await sut.auth({
+      username: "invalid_username",
+      password: "any_password",
+    });
+    expect(token.token).toEqual(null);
+    expect(token.type).toEqual(null);
+  });
+});

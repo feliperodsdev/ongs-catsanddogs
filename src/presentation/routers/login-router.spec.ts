@@ -13,8 +13,8 @@ const makeSut = () => {
         params.username == "invalid_username"
       ) {
         return {
-          type: type,
-          token: undefined,
+          type: null,
+          token: null,
         };
       }
       return {

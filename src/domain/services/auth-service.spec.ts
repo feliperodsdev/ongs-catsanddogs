@@ -16,10 +16,10 @@ const makeSut = () => {
     }
     async auth(params: IAuthUserParams) {
       const type = "Bearer";
-      const searchUser = await this.loadUserByUsernameRepository.load(
+      const user = await this.loadUserByUsernameRepository.load(
         params.username
       );
-      if (searchUser.result == "error" || searchUser.data == undefined) {
+      if (!user) {
         return {
           type: null,
           token: null,
@@ -27,7 +27,7 @@ const makeSut = () => {
       } else {
         const isPasswordValid = await this.encrypterPassword.compare(
           params.password,
-          searchUser.data.password
+          user.password
         );
         return {
           type: type,
@@ -51,22 +51,17 @@ const makeSut = () => {
   {
     async load(username: string) {
       if (username == "invalid_username") {
+        return undefined;
+      } else {
         return {
-          result: "error",
-          data: undefined,
+          id: 2,
+          name: "Felipe",
+          username: "liberty",
+          password: "NIFJEWNFOWEJPOQWE748392#ORIEJGER",
+          type: 1,
+          service_point: 0,
         };
-      } else
-        return {
-          result: "sucess",
-          data: {
-            id: 1,
-            name: "Felipe",
-            username: "liberty",
-            password: "NIFJEWNFOWEJPOQWE748392#ORIEJGER",
-            type: 1,
-            service_point: 0,
-          },
-        };
+      }
     }
   }
 
@@ -78,6 +73,7 @@ const makeSut = () => {
   return {
     sut,
     LoadUserByUsernameRepositorySpy,
+    EncrypterPassword,
   };
 };
 

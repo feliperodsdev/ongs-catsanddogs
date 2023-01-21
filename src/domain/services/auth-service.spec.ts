@@ -35,10 +35,10 @@ const makeSut = () => {
   }
 
   class TokenGeneratorSpy implements ITokenGenerator {
-    async generateToken(params: ITokenInfo): Promise<string> {
+    generateToken(params: ITokenInfo): string {
       return "any_token";
     }
-    async decryptToken(params: string): Promise<ITokenInfo> {
+    decryptToken(params: string): any {
       return { user_id: 2 };
     }
   }

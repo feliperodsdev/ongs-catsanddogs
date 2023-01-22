@@ -1,6 +1,6 @@
 import { AuthService } from "./Auth-service";
 import { IEncrypterPassword } from "./interfaces/encrypterPassword";
-import { ILoadUserByUsernameRepository } from "./interfaces/loadUserByUsernameRepository";
+import { ILoadUserByUsernameRepository } from "../../infra/repositories/interfaces/loadUserByUsernameRepository";
 import { ITokenGenerator } from "./interfaces/tokenGenerator";
 import { ITokenInfo } from "./interfaces/tokenInfo";
 
@@ -20,7 +20,7 @@ const makeSut = () => {
   {
     async load(username: string) {
       if (username == "invalid_username") {
-        return undefined;
+        return null;
       } else {
         return {
           id: 2,
@@ -28,7 +28,7 @@ const makeSut = () => {
           username: "liberty",
           password: "valid_password",
           type: 1,
-          service_point: 0,
+          service_point_id: 0,
         };
       }
     }

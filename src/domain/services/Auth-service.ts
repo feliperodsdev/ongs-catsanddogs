@@ -1,7 +1,7 @@
 import { IAuthUserParams } from "./interfaces/authParams";
 import { IAuthService } from "./interfaces/authService";
 import { IEncrypterPassword } from "./interfaces/encrypterPassword";
-import { ILoadUserByUsernameRepository } from "./interfaces/loadUserByUsernameRepository";
+import { ILoadUserByUsernameRepository } from "../../infra/repositories/interfaces/loadUserByUsernameRepository";
 import { ITokenGenerator } from "./interfaces/tokenGenerator";
 
 export class AuthService implements IAuthService {
@@ -27,7 +27,7 @@ export class AuthService implements IAuthService {
       (await this.encrypterPassword.compare(params.password, user.password));
 
     if (isValid) {
-      const token = await this.tokenGenerator.generateToken({
+      const token = this.tokenGenerator.generateToken({
         user_id: user.id,
       });
       return {

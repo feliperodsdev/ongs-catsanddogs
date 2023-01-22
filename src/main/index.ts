@@ -4,8 +4,6 @@ import { configApp } from "./config/setup";
 export const app = express();
 configApp(app);
 
-app.use(express.json());
-
 const main = () => {
   const port = process.env.PORT || 3000;
   try {

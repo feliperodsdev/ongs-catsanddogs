@@ -9,6 +9,15 @@ describe("App Setup", () => {
     const res = await request(app).get("/test");
     expect(res.headers["x-powered-by"]).toBeUndefined();
   });
+  it("Should return json", async () => {
+    app.post("/json-parser", (req, res) => {
+      res.send(req.body);
+    });
+    await request(app)
+      .post("/json-parser")
+      .send({ name: "Felipe" })
+      .expect({ name: "Felipe" });
+  });
   it("Should enable CORS", async () => {
     app.get("/test_cors", (req, res) => {
       res.send("");

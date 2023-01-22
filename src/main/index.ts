@@ -1,7 +1,8 @@
 import express from "express";
+import { configApp } from "./config/setup";
 
-
-const app = express();
+export const app = express();
+configApp(app);
 
 app.use(express.json());
 

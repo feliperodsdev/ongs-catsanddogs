@@ -36,9 +36,11 @@ const makeSut = () => {
 
   class TokenGeneratorSpy implements ITokenGenerator {
     generateToken(params: ITokenInfo): string {
-      return "any_token";
+      if (params) return "any_token";
+      else return "any_token";
     }
     decryptToken(params: string): any {
+      if (params) return { user_id: 2 };
       return { user_id: 2 };
     }
   }

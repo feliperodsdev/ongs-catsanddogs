@@ -2,12 +2,12 @@
   "name": "ongs-catsanddogs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main/index.ts",
   "scripts": {
     "test": "jest --watch",
     "testAll": "jest --watchAll",
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts",
+    "start": "ts-node src/main/index.ts",
+    "dev": "nodemon src/main/index.ts",
     "test::staged": "jest --passWithNoTests"
   },
   "repository": {

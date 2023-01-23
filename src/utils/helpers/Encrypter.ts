@@ -1,4 +1,4 @@
-import { IEncrypterPassword } from "../../domain/services/interfaces/encrypterPassword";
+import { IEncrypterPassword } from "./interfaces/encrypterPassword";
 
 export class Encrypter implements IEncrypterPassword {
   private helperEncrypt: any;

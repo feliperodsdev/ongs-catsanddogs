@@ -1,6 +1,6 @@
 import { prisma } from "../../domain/Prisma-client";
 import { ILoadUserByUsernameRepository } from "./interfaces/loadUserByUsernameRepository";
-import { UserModel } from "../../domain/services/interfaces/userModel";
+import { UserModel } from "../models/userModel";
 
 export class LoadUserByUsernameRepository
   implements ILoadUserByUsernameRepository

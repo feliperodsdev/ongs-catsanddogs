@@ -1,18 +1,18 @@
 import { IAuthUserParams } from "./interfaces/authParams";
-import { IAuthService } from "./interfaces/authService";
-import { IEncrypterPassword } from "./interfaces/encrypterPassword";
+import { IAuthService } from "./interfaces/services/authService";
+import { IEncrypterPassword } from "../../utils/helpers/interfaces/encrypterPassword";
 import { ILoadUserByUsernameRepository } from "../../infra/repositories/interfaces/loadUserByUsernameRepository";
-import { ITokenGenerator } from "./interfaces/tokenGenerator";
+import { ITokenManager } from "../../utils/helpers/interfaces/tokenManager";
 
 export class AuthService implements IAuthService {
   private encrypterPassword: IEncrypterPassword;
-  private tokenGenerator: ITokenGenerator;
+  private tokenGenerator: ITokenManager;
   private loadUserByUsernameRepository: ILoadUserByUsernameRepository;
 
   constructor(
     loadUserByUsernameRepository: ILoadUserByUsernameRepository,
     encrypterPassword: IEncrypterPassword,
-    tokenGenerator: ITokenGenerator
+    tokenGenerator: ITokenManager
   ) {
     this.loadUserByUsernameRepository = loadUserByUsernameRepository;
     this.encrypterPassword = encrypterPassword;

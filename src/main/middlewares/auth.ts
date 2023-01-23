@@ -1,9 +1,9 @@
-import { ITokenGenerator } from "../../domain/services/interfaces/tokenGenerator";
+import { ITokenManager } from "../../utils/helpers/interfaces/tokenManager";
 import HttpResponse from "../../presentation/helpers/Http-response";
 
 export class AuthMiddleware {
-  private tokenManager: ITokenGenerator;
-  constructor(tokenManager: ITokenGenerator) {
+  private tokenManager: ITokenManager;
+  constructor(tokenManager: ITokenManager) {
     this.tokenManager = tokenManager;
   }
   async isValidToken(req: any, res: any, next: any) {

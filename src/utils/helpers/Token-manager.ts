@@ -1,8 +1,8 @@
-import { ITokenGenerator } from "../../domain/services/interfaces/tokenGenerator";
+import { ITokenManager } from "./interfaces/tokenManager";
 import { ITokenInfo } from "../../domain/services/interfaces/tokenInfo";
 import jwt from "jsonwebtoken";
 
-export class TokenManager implements ITokenGenerator {
+export class TokenManager implements ITokenManager {
   private secret: string;
   constructor(secret: string) {
     this.secret = secret;

@@ -1,8 +1,8 @@
 import { AuthService } from "./Auth-service";
-import { IEncrypterPassword } from "./interfaces/encrypterPassword";
+import { IEncrypterPassword } from "../../utils/helpers/interfaces/encrypterPassword";
 import { ILoadUserByUsernameRepository } from "../../infra/repositories/interfaces/loadUserByUsernameRepository";
-import { ITokenGenerator } from "./interfaces/tokenGenerator";
 import { ITokenInfo } from "./interfaces/tokenInfo";
+import { ITokenManager } from "../../utils/helpers/interfaces/tokenManager";
 
 const makeSut = () => {
   class EncrypterPasswordSpy implements IEncrypterPassword {
@@ -34,7 +34,7 @@ const makeSut = () => {
     }
   }
 
-  class TokenGeneratorSpy implements ITokenGenerator {
+  class TokenGeneratorSpy implements ITokenManager {
     generateToken(params: ITokenInfo): string {
       if (params) return "any_token";
       else return "any_token";

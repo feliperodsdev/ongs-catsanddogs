@@ -12,7 +12,6 @@ describe("Encrypter", () => {
   it("Should return true if Encrypter returns true", async () => {
     const sut = makeSut();
     const hashed_password = await sut.hash("any_password");
-    console.log(await sut.hash("a"));
     const isValid = await sut.compare("any_password", hashed_password);
     expect(isValid).toEqual(true);
   });

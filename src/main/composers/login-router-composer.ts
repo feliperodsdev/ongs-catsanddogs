@@ -15,7 +15,7 @@ const keyValue = parseInt(process.env.KEY_VALUE || "FNOSEJNFFKESNFKL") || 8;
 
 export class LoginRouterComposer implements IComposer {
   compose() {
-    const tokenGenerator = new TokenManager(jwt, secret);
+    const tokenGenerator = new TokenManager(secret);
     const encrypter = new Encrypter(bcrypt, keyValue);
     const loadUserByUsernameRepository = new LoadUserByUsernameRepository();
     const authService = new AuthService(

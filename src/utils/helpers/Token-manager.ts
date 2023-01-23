@@ -1,21 +1,20 @@
 import { ITokenGenerator } from "../../domain/services/interfaces/tokenGenerator";
 import { ITokenInfo } from "../../domain/services/interfaces/tokenInfo";
+import jwt from "jsonwebtoken";
 
 export class TokenManager implements ITokenGenerator {
-  private tokenHelper: any;
   private secret: string;
-  constructor(TokenHelper: any, secret: string) {
-    this.tokenHelper = TokenHelper;
+  constructor(secret: string) {
     this.secret = secret;
   }
   generateToken(params: ITokenInfo): string {
-    const token = this.tokenHelper.sign(params, this.secret, {
+    const token = jwt.sign(params, this.secret, {
       expiresIn: "10h",
     });
     return token;
   }
-  decryptToken(token: string): ITokenInfo {
-    const info = this.tokenHelper.verify(token, this.secret);
+  decryptToken(token: string): any {
+    const info = jwt.verify(token, this.secret);
     return info;
   }
 }

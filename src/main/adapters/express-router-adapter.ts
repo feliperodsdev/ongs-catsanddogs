@@ -1,5 +1,5 @@
 export class ExpressRouterAdapter {
-  static adapt(router: any) {
+  adapt(router: any) {
     return async (req: any, res: any) => {
       const httpRequest = {
         body: req.body,

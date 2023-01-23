@@ -1,6 +1,5 @@
 import { TokenManager } from "../../utils/helpers/Token-manager";
 import { IComposer } from "./composer-interface";
-import jwt from "jsonwebtoken";
 import { Encrypter } from "../../utils/helpers/Encrypter";
 import bcrypt from "bcryptjs";
 import { LoadUserByUsernameRepository } from "../../infra/repositories/Prisma-Load-User-By-Username";

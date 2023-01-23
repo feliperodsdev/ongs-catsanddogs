@@ -1,6 +1,6 @@
 import HttpResponse from "../helpers/Http-response";
 import { IAuthUserParams } from "../../domain/services/interfaces/authParams";
-import { IAuthService } from "../../domain/services/interfaces/authService";
+import { IAuthService } from "../../domain/services/interfaces/services/authService";
 import { IToken } from "../../domain/services/interfaces/token";
 
 export default class LoginRouter {

@@ -1,7 +1,7 @@
 import LoginRouter from "./Login-router";
 import { MissingParamError } from "../../utils/errors/Missing-param-error";
 import { IAuthUserParams } from "../../domain/services/interfaces/authParams";
-import { IAuthService } from "../../domain/services/interfaces/authService";
+import { IAuthService } from "../../domain/services/interfaces/services/authService";
 import { InvalidCredentialError } from "../../utils/errors/Invalid-credential-error";
 
 const makeSut = () => {

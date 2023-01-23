@@ -1,12 +1,7 @@
 import { ITokenGenerator } from "../../domain/services/interfaces/tokenGenerator";
 import { ITokenInfo } from "../../domain/services/interfaces/tokenInfo";
-import jwt from "jsonwebtoken";
 
-const secret =
-  process.env.SECRET_KEY ||
-  "nfiowejbgfiwebgjilerbgjiegreNBERJKLBFJLERVGFHLWEJFBFERJKL";
-
-class TokenManager implements ITokenGenerator {
+export class TokenManager implements ITokenGenerator {
   private tokenHelper: any;
   private secret: string;
   constructor(TokenHelper: any, secret: string) {
@@ -24,5 +19,3 @@ class TokenManager implements ITokenGenerator {
     return info;
   }
 }
-
-export const tokenManager = new TokenManager(jwt, secret);

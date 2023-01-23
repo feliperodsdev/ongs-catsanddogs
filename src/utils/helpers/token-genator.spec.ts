@@ -1,7 +1,12 @@
-import { tokenManager } from "./Token-manager";
+import { TokenManager } from "./Token-manager";
+import jwt from "jsonwebtoken";
+
+const secret =
+  process.env.SECRET_KEY ||
+  "nfiowejbgfiwebgjilerbgjiegreNBERJKLBFJLERVGFHLWEJFBFERJKL";
 
 const makeSut = () => {
-  const sut = tokenManager;
+  const sut = new TokenManager(jwt, secret);
   return sut;
 };
 

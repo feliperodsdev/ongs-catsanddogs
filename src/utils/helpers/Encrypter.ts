@@ -1,9 +1,6 @@
 import { IEncrypterPassword } from "../../domain/services/interfaces/encrypterPassword";
-import bcrypt from "bcryptjs";
 
-const keyValue = parseInt(process.env.KEY_VALUE || "FNOSEJNFFKESNFKL") || 8;
-
-class Encrypter implements IEncrypterPassword {
+export class Encrypter implements IEncrypterPassword {
   private helperEncrypt: any;
   private keyValue: number;
   constructor(helperEncrypt: any, keyValue: number) {
@@ -18,5 +15,3 @@ class Encrypter implements IEncrypterPassword {
     return isValid;
   }
 }
-
-export const EncrypterHelper = new Encrypter(bcrypt, keyValue);

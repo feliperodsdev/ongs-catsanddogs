@@ -54,11 +54,11 @@ describe("Login Router", () => {
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError("password"));
   });
-  it("Should return 500 if no body is provided", async () => {
+  it("Should return 400 if no body is provided", async () => {
     const { sut } = makeSut();
     const httpRequest = {};
     const httpResponse = await sut.route(httpRequest);
-    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.statusCode).toBe(400);
   });
   it("Should return 401 if invalid credentials provided", async () => {
     const { sut } = makeSut();

@@ -11,7 +11,7 @@ export default class LoginRouter {
   async route(httpRequest: any) {
     try {
       if (!httpRequest.body) {
-        return HttpResponse.serverError();
+        return HttpResponse.badRequest("body");
       }
 
       const requiredFields = ["username", "password"];

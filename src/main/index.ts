@@ -1,8 +1,8 @@
-import express from "express";
-import { configApp } from "./config/setup";
+import { setupApp } from "./config/setup";
+import { loginRouter } from "./routes/login-routes";
+export const app = setupApp();
 
-export const app = express();
-configApp(app);
+app.use("/user", loginRouter);
 
 const main = () => {
   const port = process.env.PORT || 3000;

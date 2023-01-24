@@ -21,9 +21,11 @@ const makeSut = () => {
           ) {
             return HttpResponse.badRequest(field);
           }
-
-          await this.createUserService.createUser(httpRequest.body);
         }
+        console.log("httpRequest");
+        await this.createUserService.createUser(httpRequest.body);
+
+        return HttpResponse.created("User Created");
       } catch (e: any) {
         if (e.name == "AlreadyExistsError") {
           return HttpResponse.ok<string>(e.message);
@@ -63,24 +65,42 @@ describe("Create User route", () => {
   it("Should return 400 an CreateUserParam is not provided", async () => {
     const { sut } = makeSut();
     const httpRequest = {
-      body: { username: "Felipexd", name: "Felipe" },
+      body: {
+        name: "Felipe",
+        username: "user_exist",
+        type: 1,
+      },
     };
     const response = await sut.route(httpRequest);
+    console.log(response);
     expect(response.statusCode).toBe(400);
   });
 
   it("Should return 'User already exists' if user exist", async () => {
-    const { sut, createUserService } = makeSut();
+    const { sut } = makeSut();
     const httpRequest = {
       body: {
         name: "Felipe",
         username: "user_exist",
         password: "123",
         type: 1,
-        service_point: 0,
       },
     };
     const response = await sut.route(httpRequest);
     expect(response.body).toEqual("User already exists");
+  });
+
+  it("Should return 201 if user been created", async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: "Felipe",
+        username: "new_user",
+        password: "123",
+        type: 1,
+      },
+    };
+    const response = await sut.route(httpRequest);
+    expect(response.statusCode).toEqual(201);
   });
 });

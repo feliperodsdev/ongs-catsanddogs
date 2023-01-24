@@ -26,4 +26,10 @@ export default class HttpResponse {
       body: content,
     };
   }
+  static created<T>(content: T) {
+    return {
+      statusCode: 201,
+      body: content,
+    };
+  }
 }

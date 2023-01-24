@@ -20,9 +20,14 @@ export class CreateUserRouter {
           return HttpResponse.badRequest(field);
         }
       }
-      await this.createUserService.createUser(httpRequest.body);
+      const hasUserBeenCreated = await this.createUserService.createUser(
+        httpRequest.body
+      );
 
-      return HttpResponse.created("User Created");
+      if (hasUserBeenCreated == true)
+        return HttpResponse.created("User Created");
+
+      return HttpResponse.ok<String>("User already exists");
     } catch (e: any) {
       if (e.name == "AlreadyExistsError") {
         return HttpResponse.ok<string>(e.message);

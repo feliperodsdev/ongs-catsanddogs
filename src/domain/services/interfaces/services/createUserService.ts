@@ -1,5 +1,5 @@
 import { ICreateUserParams } from "../createUserParams";
 
 export interface ICreateUserService {
-  createUser(params: ICreateUserParams): Promise<void>;
+  createUser(params: ICreateUserParams): Promise<boolean>;
 }

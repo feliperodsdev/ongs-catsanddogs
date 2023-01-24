@@ -1,14 +1,14 @@
 import { ICreateUserParams } from "../../domain/services/interfaces/createUserParams";
 import { ICreateUserService } from "../../domain/services/interfaces/services/createUserService";
-import { AlreadyExistsError } from "../../infra/errors/alreadyExists";
 import { CreateUserRouter } from "./Create-User-router";
 
 const makeSut = () => {
   class CreateUserService implements ICreateUserService {
-    async createUser(params: ICreateUserParams): Promise<void> {
+    async createUser(params: ICreateUserParams): Promise<boolean> {
       if (params.username == "user_exist") {
-        throw new AlreadyExistsError("User");
+        return false;
       }
+      return true;
     }
   }
 

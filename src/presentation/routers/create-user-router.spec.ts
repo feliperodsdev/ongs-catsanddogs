@@ -22,7 +22,6 @@ const makeSut = () => {
             return HttpResponse.badRequest(field);
           }
         }
-        console.log("httpRequest");
         await this.createUserService.createUser(httpRequest.body);
 
         return HttpResponse.created("User Created");

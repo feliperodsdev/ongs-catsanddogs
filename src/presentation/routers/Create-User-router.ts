@@ -29,9 +29,6 @@ export class CreateUserRouter {
 
       return HttpResponse.ok<String>("User already exists");
     } catch (e: any) {
-      if (e.name == "AlreadyExistsError") {
-        return HttpResponse.ok<string>(e.message);
-      }
       return HttpResponse.serverError();
     }
   }

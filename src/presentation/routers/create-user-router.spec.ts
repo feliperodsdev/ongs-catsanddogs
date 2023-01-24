@@ -1,43 +1,13 @@
 import { ICreateUserParams } from "../../domain/services/interfaces/createUserParams";
 import { ICreateUserService } from "../../domain/services/interfaces/services/createUserService";
-import { ALreadyExistsError } from "../../infra/errors/alreadyExists";
-import HttpResponse from "../helpers/Http-response";
+import { AlreadyExistsError } from "../../infra/errors/alreadyExists";
+import { CreateUserRouter } from "./Create-User-router";
 
 const makeSut = () => {
-  class CreateUserRouter {
-    constructor(private readonly createUserService: ICreateUserService) {}
-    async route(httpRequest: any) {
-      try {
-        if (!httpRequest.body) {
-          return HttpResponse.badRequest("body");
-        }
-
-        const requiredFields = ["username", "password", "type", "name"];
-
-        for (const field of requiredFields) {
-          if (
-            !httpRequest?.body?.[field as keyof ICreateUserParams] ||
-            field.trim() == ""
-          ) {
-            return HttpResponse.badRequest(field);
-          }
-        }
-        await this.createUserService.createUser(httpRequest.body);
-
-        return HttpResponse.created("User Created");
-      } catch (e: any) {
-        if (e.name == "AlreadyExistsError") {
-          return HttpResponse.ok<string>(e.message);
-        }
-        return HttpResponse.serverError();
-      }
-    }
-  }
-
   class CreateUserService implements ICreateUserService {
     async createUser(params: ICreateUserParams): Promise<void> {
       if (params.username == "user_exist") {
-        throw new ALreadyExistsError("User");
+        throw new AlreadyExistsError("User");
       }
     }
   }

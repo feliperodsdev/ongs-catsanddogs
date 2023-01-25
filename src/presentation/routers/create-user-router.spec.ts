@@ -56,7 +56,7 @@ describe("Create User route", () => {
       },
     };
     const response = await sut.route(httpRequest);
-    expect(response.body).toEqual("User already exists");
+    expect(response.body).toEqual({ msg: "User already exists" });
   });
 
   it("Should return 201 if user been created", async () => {

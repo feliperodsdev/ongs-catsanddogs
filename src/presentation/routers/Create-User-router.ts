@@ -25,10 +25,12 @@ export class CreateUserRouter {
       );
 
       if (hasUserBeenCreated == true)
-        return HttpResponse.created("User Created");
-
-      return HttpResponse.ok<String>("User already exists");
+        return HttpResponse.created({ msg: "User Created" });
+      return HttpResponse.ok({ msg: "User already exists" });
     } catch (e: any) {
+      if (e.name === "EntitieValidationError") {
+        return HttpResponse.ok({ msg: e.message });
+      }
       return HttpResponse.serverError();
     }
   }

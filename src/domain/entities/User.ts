@@ -33,12 +33,6 @@ export class User {
     this.password = pass;
   }
 
-  set setUsernameTest(user: string) {
-    if (user == "testx")
-      throw new EntitieValidationError("username cannot be 'testx'");
-    this.username = user;
-  }
-
   constructor(props: propsUser) {
     this.name = props.name;
     this.password = props.password;

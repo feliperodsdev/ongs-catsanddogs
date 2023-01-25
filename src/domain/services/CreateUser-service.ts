@@ -28,8 +28,6 @@ export class CreateUserService implements ICreateUserService {
     }
 
     const userToBeCreated = new User(params);
-
-    userToBeCreated.setUsernameTest = params.username;
     userToBeCreated.setPassword = await this.encrypter.hash(
       userToBeCreated.getPassword
     );

@@ -41,7 +41,7 @@ describe("Create User route", () => {
       },
     };
     const response = await sut.route(httpRequest);
-    console.log(response);
+
     expect(response.statusCode).toBe(400);
   });
 

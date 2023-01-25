@@ -9,7 +9,6 @@ describe("Create User", () => {
           username: "liberty",
           password: "NIFJEWNFOWEJPOQWE748392#ORIEJGER",
           type: 1,
-          service_point: 0,
         })
     ).not.toThrow();
   });
@@ -21,7 +20,6 @@ describe("Create User", () => {
           username: "liberty",
           password: "NIFJEWNFOWEJPOQWE748392#ORIEJGER",
           type: 2,
-          service_point: 0,
         })
     ).not.toThrow();
   });

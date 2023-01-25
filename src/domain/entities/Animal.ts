@@ -20,12 +20,12 @@ export class Animal {
   }
 
   set setWeight(weight: number) {
-    if (weight <= 0) throw new Error("Weight cant be less than or equal to 0.");
+    if (weight <= 0) throw new Error("Peso não pode ser zerado ou igual a 0");
     else this.propsAnimal.weight = weight;
   }
 
   set setAge(age: number) {
-    if (age <= 0) throw new Error("Age cant be less than or equal to 0.");
+    if (age <= 0) throw new Error("Idade não pode ser zerado ou igual a 0");
     else this.propsAnimal.approxAge = age;
   }
 

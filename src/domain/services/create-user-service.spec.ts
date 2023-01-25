@@ -63,22 +63,20 @@ const makeSut = () => {
     }
   }
 
+  const sut = new CreateUserService(
+    new CreateUserRepository(),
+    new EncrypterPasswordSpy(),
+    new LoadUserByUsernameRepositorySpy()
+  );
+
   return {
-    EncrypterPasswordSpy,
-    CreateUserRepository,
-    LoadUserByUsernameRepositorySpy,
-    CreateUserService,
+    sut,
   };
 };
 
 describe("CreateUserService", () => {
   it("Should return true if user dont exist on system", async () => {
-    const {
-      CreateUserService,
-      LoadUserByUsernameRepositorySpy,
-      EncrypterPasswordSpy,
-      CreateUserRepository,
-    } = makeSut();
+    const { sut } = makeSut();
     const httpRequest = {
       body: {
         name: "Felipe",
@@ -87,20 +85,10 @@ describe("CreateUserService", () => {
         type: 1,
       },
     };
-    const sut = new CreateUserService(
-      new CreateUserRepository(),
-      new EncrypterPasswordSpy(),
-      new LoadUserByUsernameRepositorySpy()
-    );
     expect(await sut.createUser(httpRequest.body)).toEqual(true);
   });
   it("Should return false if user exist on system", async () => {
-    const {
-      CreateUserService,
-      LoadUserByUsernameRepositorySpy,
-      EncrypterPasswordSpy,
-      CreateUserRepository,
-    } = makeSut();
+    const { sut } = makeSut();
     const httpRequest = {
       body: {
         name: "Felipe",
@@ -109,11 +97,6 @@ describe("CreateUserService", () => {
         type: 1,
       },
     };
-    const sut = new CreateUserService(
-      new CreateUserRepository(),
-      new EncrypterPasswordSpy(),
-      new LoadUserByUsernameRepositorySpy()
-    );
     expect(await sut.createUser(httpRequest.body)).toEqual(false);
   });
 });

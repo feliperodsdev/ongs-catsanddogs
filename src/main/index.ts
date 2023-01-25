@@ -1,8 +1,10 @@
 import { setupApp } from "./config/setup";
 import { loginRouter } from "./routes/login-routes";
+import { userRouter } from "./routes/user-router";
 export const app = setupApp();
 
-app.use("/user", loginRouter);
+app.use("/", loginRouter);
+app.use("/user", userRouter);
 
 const main = () => {
   const port = process.env.PORT || 3000;

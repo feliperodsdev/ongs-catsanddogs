@@ -4,5 +4,5 @@ export interface UserModel {
   username: string;
   password: string;
   type: number;
-  service_point_id: number;
+  service_point_id: number | null;
 }

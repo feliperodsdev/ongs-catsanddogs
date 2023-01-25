@@ -5,6 +5,8 @@ import { IEncrypterPassword } from "../../utils/helpers/interfaces/encrypterPass
 import { ICreateUserParams } from "./interfaces/createUserParams";
 import { ICreateUserService } from "./interfaces/services/createUserService";
 
+const inMemoryDbUser: any[] = [];
+
 const makeSut = () => {
   class CreateUserService implements ICreateUserService {
     private createUserRepository: ICreateUserRepository;
@@ -28,6 +30,11 @@ const makeSut = () => {
         return false;
       }
 
+      const userToBeCreated = params;
+      userToBeCreated.password = await this.encrypter.hash(params.password);
+
+      await this.createUserRepository.createUser(params);
+
       return true;
     }
   }
@@ -50,7 +57,9 @@ const makeSut = () => {
   }
 
   class CreateUserRepository implements ICreateUserRepository {
-    async createUser(params: ICreateUserParams): Promise<void> {}
+    async createUser(params: ICreateUserParams): Promise<void> {
+      inMemoryDbUser.push(params);
+    }
   }
 
   class EncrypterPasswordSpy implements IEncrypterPassword {
@@ -98,5 +107,18 @@ describe("CreateUserService", () => {
       },
     };
     expect(await sut.createUser(httpRequest.body)).toEqual(false);
+  });
+  it("Should return false if user exist on system", async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: "Felipe",
+        username: "invalid_username",
+        password: "123",
+        type: 1,
+      },
+    };
+    await sut.createUser(httpRequest.body);
+    expect(inMemoryDbUser[0].password).toBe("hashed_password");
   });
 });

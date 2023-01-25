@@ -2,6 +2,7 @@ import { UserModel } from "../../infra/models/userModel";
 import { ICreateUserRepository } from "../../infra/repositories/interfaces/createUserRepository";
 import { ILoadUserByUsernameRepository } from "../../infra/repositories/interfaces/loadUserByUsernameRepository";
 import { IEncrypterPassword } from "../../utils/helpers/interfaces/encrypterPassword";
+import { User } from "../entities/User";
 import { CreateUserService } from "./CreateUser-service";
 import { ICreateUserParams } from "./interfaces/createUserParams";
 
@@ -33,6 +34,7 @@ const makeSut = () => {
 
   class EncrypterPasswordSpy implements IEncrypterPassword {
     async hash(password: string): Promise<string> {
+      console.log("aqui");
       return "hashed_password";
     }
     //"compare" method is not used in this test

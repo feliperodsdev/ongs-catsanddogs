@@ -1,6 +1,7 @@
 import { ICreateUserRepository } from "../../infra/repositories/interfaces/createUserRepository";
 import { ILoadUserByUsernameRepository } from "../../infra/repositories/interfaces/loadUserByUsernameRepository";
 import { IEncrypterPassword } from "../../utils/helpers/interfaces/encrypterPassword";
+import { User } from "../entities/User";
 import { ICreateUserParams } from "./interfaces/createUserParams";
 import { ICreateUserService } from "./interfaces/services/createUserService";
 
@@ -22,14 +23,23 @@ export class CreateUserService implements ICreateUserService {
       params.username
     );
 
-    if (!userAlreadyExists) {
+    if (userAlreadyExists === null) {
       return false;
     }
 
-    const userToBeCreated = params;
-    userToBeCreated.password = await this.encrypter.hash(params.password);
+    const userToBeCreated = new User(params);
 
-    await this.createUserRepository.createUser(params);
+    userToBeCreated.setUsernameTest = params.username;
+    userToBeCreated.setPassword = await this.encrypter.hash(
+      userToBeCreated.getPassword
+    );
+
+    await this.createUserRepository.createUser({
+      username: userToBeCreated.getUsername,
+      name: userToBeCreated.getName,
+      type: userToBeCreated.getType,
+      password: userToBeCreated.getPassword,
+    });
 
     return true;
   }

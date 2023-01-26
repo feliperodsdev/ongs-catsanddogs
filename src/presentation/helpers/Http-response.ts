@@ -14,6 +14,14 @@ export default class HttpResponse {
       body: new InvalidCredentialError(),
     };
   }
+  static unauthorized(msg: string) {
+    return {
+      statusCode: 403,
+      body: {
+        data: msg,
+      },
+    };
+  }
   static serverError() {
     return {
       statusCode: 500,
@@ -23,13 +31,17 @@ export default class HttpResponse {
   static ok<T>(content: T) {
     return {
       statusCode: 200,
-      body: content,
+      body: {
+        data: content,
+      },
     };
   }
   static created<T>(content: T) {
     return {
       statusCode: 201,
-      body: content,
+      body: {
+        data: content,
+      },
     };
   }
 }

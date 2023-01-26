@@ -76,6 +76,8 @@ describe("Login Router", () => {
     };
     const httpResponse = await sut.route(httpRequest);
     expect(httpResponse.statusCode).toBe(200);
-    expect(httpResponse.body).toEqual({ type: "Bearer", token: "any_token" });
+    expect(httpResponse.body).toEqual({
+      data: { type: "Bearer", token: "any_token" },
+    });
   });
 });

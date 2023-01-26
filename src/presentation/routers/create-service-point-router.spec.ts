@@ -1,6 +1,6 @@
 import { ICreateServicePointParams } from "../../domain/services/interfaces/createServicePointParams";
 import { ICreateServicePointService } from "../../domain/services/interfaces/services/createServicePoint";
-import { CreateServicePoint } from "./Create-Service-Point";
+import { CreateServicePointRouter } from "./Create-Service-Point";
 
 const makeSut = () => {
   class CreateServicePointService implements ICreateServicePointService {
@@ -9,7 +9,7 @@ const makeSut = () => {
     }
   }
 
-  const sut = new CreateServicePoint(new CreateServicePointService());
+  const sut = new CreateServicePointRouter(new CreateServicePointService());
 
   return {
     sut,

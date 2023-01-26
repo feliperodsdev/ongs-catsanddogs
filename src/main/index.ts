@@ -1,11 +1,12 @@
 import { setupApp } from "./config/setup";
 import { loginRouter } from "./routes/login-routes";
+import { servicePointRouter } from "./routes/servicepoint-router";
 import { userRouter } from "./routes/user-router";
 export const app = setupApp();
 
 app.use("/", loginRouter);
 app.use("/user", userRouter);
-
+app.use("/service-point", servicePointRouter);
 const main = () => {
   const port = process.env.PORT || 3000;
   try {

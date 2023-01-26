@@ -9,16 +9,16 @@ export class AuthMiddleware {
   async isValidToken(req: any, res: any, next: any) {
     const authToken = req.headers.authorization;
     if (!authToken || !authToken.startsWith("Bearer ")) {
-      return HttpResponse.badRequest("token");
+      const response = HttpResponse.badRequest("token");
+      return res.status(response.statusCode).send({ msg: response.body });
     }
-
     try {
       const token = authToken.split(" ")[1];
       const user = this.tokenManager.decryptToken(token);
       req.user = user;
       next();
     } catch (e) {
-      res.status(401).send({ name: "Token invalid" });
+      return res.status(401).send({ name: "Token invalid" });
     }
   }
 }

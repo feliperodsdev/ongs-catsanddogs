@@ -1,6 +1,4 @@
-import { EntitieValidationError } from "./errors/Entitie-validation-error";
-
-export interface propsUser {
+interface propsUser {
   name: string;
   username: string;
   password: string;

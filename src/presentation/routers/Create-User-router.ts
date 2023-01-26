@@ -28,7 +28,6 @@ export class CreateUserRouter {
         return HttpResponse.created({ msg: "User Created" });
       return HttpResponse.ok({ msg: "User already exists" });
     } catch (e: any) {
-      console.log(e);
       if (e.name === "EntitieValidationError") {
         return HttpResponse.ok({ msg: e.message });
       }

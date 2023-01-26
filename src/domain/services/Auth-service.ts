@@ -25,10 +25,10 @@ export class AuthService implements IAuthService {
     const isValid =
       user &&
       (await this.encrypterPassword.compare(params.password, user.password));
-
     if (isValid) {
       const token = this.tokenGenerator.generateToken({
         user_id: user.id,
+        type: user.type,
       });
       return {
         type: type,

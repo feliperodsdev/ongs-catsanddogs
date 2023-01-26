@@ -2,7 +2,7 @@ import { ICreateServicePointParams } from "../../domain/services/interfaces/crea
 import { ICreateServicePointService } from "../../domain/services/interfaces/services/createServicePoint";
 import HttpResponse from "../helpers/Http-response";
 
-export class CreateServicePoint {
+export class CreateServicePointRouter {
   constructor(
     private readonly createServicePoint: ICreateServicePointService
   ) {}
@@ -10,6 +10,9 @@ export class CreateServicePoint {
     try {
       if (!httpRequest.body) {
         return HttpResponse.badRequest("Body");
+      }
+      if (httpRequest.user.type != 2) {
+        return HttpResponse.unauthorized("You cannot create an Service Point");
       }
 
       const requiredFields = ["desc", "name"];

@@ -1,9 +1,10 @@
+import { ICreateServicePointParams } from "../../domain/services/interfaces/createServicePointParams";
 import { ICreateServicePointService } from "../../domain/services/interfaces/services/createServicePoint";
 import { CreateServicePoint } from "./Create-Service-Point";
 
 const makeSut = () => {
   class CreateServicePointService implements ICreateServicePointService {
-    async createService(params: ICreateServicePointService): Promise<boolean> {
+    async createService(params: ICreateServicePointParams): Promise<boolean> {
       return true;
     }
   }

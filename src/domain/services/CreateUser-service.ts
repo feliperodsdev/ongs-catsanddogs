@@ -1,3 +1,4 @@
+import { isNull } from "util";
 import { ICreateUserRepository } from "../../infra/repositories/interfaces/createUserRepository";
 import { ILoadUserByUsernameRepository } from "../../infra/repositories/interfaces/loadUserByUsernameRepository";
 import { IEncrypterPassword } from "../../utils/helpers/interfaces/encrypterPassword";
@@ -23,7 +24,7 @@ export class CreateUserService implements ICreateUserService {
       params.username
     );
 
-    if (userAlreadyExists === null) {
+    if (userAlreadyExists) {
       return false;
     }
 

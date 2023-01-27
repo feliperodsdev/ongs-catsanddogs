@@ -1,7 +1,7 @@
-import { Encrypter } from "../../utils/helpers/Encrypter";
 import { IComposer } from "./composer-interface";
 import bcrypt from "bcryptjs";
 import { LoadUserByUsernameRepository } from "../../infra/repositories/Prisma-Load-User-By-Username";
+import { Encrypter } from "../../utils/helpers/Encrypter";
 import { CreateUserRepository } from "../../infra/repositories/Prisma-Create-User-Repository";
 import { CreateUserService } from "../../domain/services/CreateUser-service";
 import { CreateUserRouter } from "../../presentation/routers/Create-User-router";

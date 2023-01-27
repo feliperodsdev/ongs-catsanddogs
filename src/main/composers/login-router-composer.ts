@@ -1,10 +1,10 @@
+import { AuthService } from "../../domain/services/Auth-service";
+import { LoadUserByUsernameRepository } from "../../infra/repositories/Prisma-Load-User-By-Username";
+import LoginRouter from "../../presentation/routers/Login-router";
+import { Encrypter } from "../../utils/helpers/Encrypter";
 import { TokenManager } from "../../utils/helpers/Token-manager";
 import { IComposer } from "./composer-interface";
-import { Encrypter } from "../../utils/helpers/Encrypter";
 import bcrypt from "bcryptjs";
-import { LoadUserByUsernameRepository } from "../../infra/repositories/Prisma-Load-User-By-Username";
-import { AuthService } from "../../domain/services/Auth-service";
-import LoginRouter from "../../presentation/routers/Login-router";
 
 const secret =
   process.env.SECRET_KEY ||

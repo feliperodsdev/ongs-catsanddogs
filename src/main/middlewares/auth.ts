@@ -1,5 +1,5 @@
-import { ITokenManager } from "../../utils/helpers/interfaces/tokenManager";
 import HttpResponse from "../../presentation/helpers/Http-response";
+import { ITokenManager } from "../../utils/helpers/interfaces/tokenManager";
 
 export class AuthMiddleware {
   private tokenManager: ITokenManager;

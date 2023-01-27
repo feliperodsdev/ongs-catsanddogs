@@ -99,6 +99,7 @@ describe("Auth Service", () => {
     const tokenGenerator = new TokenGeneratorSpy();
     const returnTokenGenerator = await tokenGenerator.generateToken({
       user_id: 2,
+      type: 2,
     });
     expect(token.token).toEqual(returnTokenGenerator);
     expect(token.type).toEqual("Bearer");

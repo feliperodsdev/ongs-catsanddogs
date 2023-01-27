@@ -1,4 +1,3 @@
-import { response } from "express";
 import { IAppendUserToService } from "../../domain/services/interfaces/services/appendUserToService";
 import HttpResponse from "../helpers/Http-response";
 

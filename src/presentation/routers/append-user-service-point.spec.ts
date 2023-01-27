@@ -4,8 +4,8 @@ import { AppendUserToServicePointRouter } from "./Append-User-Service-Point";
 
 const makeSut = () => {
   class AppendUserToServiceSpy implements IAppendUserToService {
-    async append(params: IAppendUserToServicePointParams): Promise<boolean> {
-      return true;
+    async append(params: IAppendUserToServicePointParams): Promise<string> {
+      return "Appended";
     }
   }
 

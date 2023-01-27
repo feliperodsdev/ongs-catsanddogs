@@ -1,30 +1,8 @@
 import { IAppendUserToServicePointParams } from "../../domain/services/interfaces/appendUserToServicePoint";
 import { IAppendUserToService } from "../../domain/services/interfaces/services/appendUserToService";
-import HttpResponse from "../helpers/Http-response";
+import { AppendUserToServicePointRouter } from "./Append-User-Service-Point";
 
 const makeSut = () => {
-  class AppendUserToServicePointRouter {
-    constructor(private readonly appendUserToService: IAppendUserToService) {}
-    async route(httpRequest: any) {
-      if (!httpRequest.body) {
-        return HttpResponse.badRequest("Body");
-      }
-
-      if (!httpRequest.body["service_point_id"]) {
-        return HttpResponse.badRequest("service_point_id");
-      }
-
-      const userId = httpRequest.user;
-      const data = {
-        service_point_id: httpRequest.body.service_point_id,
-        user_id: httpRequest.user.userId,
-      };
-      const appendServiceMethod = await this.appendUserToService.append(data);
-
-      return HttpResponse.ok("Append");
-    }
-  }
-
   class AppendUserToServiceSpy implements IAppendUserToService {
     async append(params: IAppendUserToServicePointParams): Promise<boolean> {
       return true;

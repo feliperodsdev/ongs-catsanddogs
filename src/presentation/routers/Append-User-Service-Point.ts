@@ -20,10 +20,12 @@ export class AppendUserToServicePointRouter {
         user_id: userId,
       };
       const responseService = await this.appendUserToService.append(data);
-      if (responseService == "AlreadyLinked") {
+      if (responseService == "alreadyLinked") {
         return HttpResponse.ok(
           "This user is already linked to this service point"
         );
+      } else if (responseService == "invalidServicePointId") {
+        return HttpResponse.ok("This Service Point is invalid");
       }
       return HttpResponse.ok("Append");
     } catch (e) {

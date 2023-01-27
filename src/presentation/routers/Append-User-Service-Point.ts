@@ -1,3 +1,4 @@
+import { response } from "express";
 import { IAppendUserToService } from "../../domain/services/interfaces/services/appendUserToService";
 import HttpResponse from "../helpers/Http-response";
 
@@ -18,8 +19,12 @@ export class AppendUserToServicePointRouter {
         service_point_id: httpRequest.body.service_point_id,
         user_id: userId,
       };
-      await this.appendUserToService.append(data);
-
+      const responseService = await this.appendUserToService.append(data);
+      if (responseService == "AlreadyLinked") {
+        return HttpResponse.ok(
+          "This user is already linked to this service point"
+        );
+      }
       return HttpResponse.ok("Append");
     } catch (e) {
       return HttpResponse.serverError();

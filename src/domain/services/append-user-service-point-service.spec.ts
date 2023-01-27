@@ -11,7 +11,7 @@ const makeSut = () => {
     async append(params: IAppendUserToServicePointParams): Promise<string> {
       const user = await this.loadUserByIdRepository.load(params.user_id);
       if (user?.service_point_id == params.service_point_id) {
-        return "This user is already linked to this service point";
+        return "AlreadyLinked";
       }
     }
   }
@@ -43,14 +43,20 @@ const makeSut = () => {
 };
 
 describe("AppendUserServicepointService", () => {
-  it("Should return 'This user is already linked to this service point' if it is", async () => {
+  it("Should return 'AlreadyLinked' if it is", async () => {
     const { sut } = makeSut();
     const params = {
       user_id: 2,
       service_point_id: 1,
     };
-    expect(await sut.append(params)).toEqual(
-      "This user is already linked to this service point"
-    );
+    expect(await sut.append(params)).toEqual("AlreadyLinked");
+  });
+  it("Should return 'InvalidServicePointId' if servicepoint dont exist", async () => {
+    const { sut } = makeSut();
+    const params = {
+      user_id: 2,
+      service_point_id: 64564512,
+    };
+    expect(await sut.append(params)).toEqual("AlreadyLinked");
   });
 });

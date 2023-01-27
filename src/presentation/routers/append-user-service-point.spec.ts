@@ -36,9 +36,11 @@ describe("AppendUserToServicePointRouter", () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
+        user_id: 3,
         service_point_id: 2,
       },
       user: {
+        type: 2,
         userId: 3,
       },
     };

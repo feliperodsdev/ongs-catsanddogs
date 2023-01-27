@@ -22,6 +22,10 @@ export class AppendUserServicepointService implements IAppendUserToService {
     try {
       const user = await this.loadUserByIdRepository.load(params.user_id);
 
+      if (!user) {
+        return "userInvalid";
+      }
+
       if (user?.service_point_id == params.service_point_id) {
         return "alreadyLinked";
       }

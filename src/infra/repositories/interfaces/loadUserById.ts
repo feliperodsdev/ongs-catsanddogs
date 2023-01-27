@@ -1,5 +1,5 @@
 import { UserModel } from "../../models/userModel";
 
-export interface ILoadUserById {
+export interface ILoadUserByIdRepository {
   load(id: number): Promise<UserModel | null>;
 }

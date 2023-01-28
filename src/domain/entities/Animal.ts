@@ -37,9 +37,16 @@ export class Animal {
     else this.propsAnimal.approxAge = age;
   }
 
+  set setSpecie(specie: number) {
+    if (specie < 1 || specie > 2) {
+      throw new EntitieValidationError("Specie does not exist.");
+    } else this.propsAnimal.specie = specie;
+  }
+
   constructor(props: propsAnimal) {
     this.propsAnimal = props;
     this.setWeight = props.weight;
+    this.setSpecie = props.specie;
     this.setAge = props.approxAge;
   }
 }

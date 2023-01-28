@@ -4,8 +4,9 @@ export interface ICreateAnAnimalParams {
   weight: number;
   sickness: boolean;
   desc: string;
-  castraded: boolean;
+  castrated: boolean;
   breed: string;
-  service_point_id: number;
   user_id: number;
+  service_point_id: number;
+  approxAge: number;
 }

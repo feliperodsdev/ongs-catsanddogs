@@ -22,13 +22,14 @@ model Service_point {
 }
 
 model User {
-  id               Int           @id @default(autoincrement())
+  id               Int            @id @default(autoincrement())
   name             String
-  username         String        @unique
+  username         String         @unique
   password         String
-  type             Int           @default(2)
+  type             Int            @default(2)
   Service_point    Service_point? @relation(fields: [service_point_id], references: [id])
-  service_point_id Int? @default(0)
+  service_point_id Int?           @default(0)
+  animal           Animal[]
 
   @@map("users")
 }
@@ -39,12 +40,14 @@ model Animal {
   specie           Int
   weight           Float
   sickness         Boolean
-  desc             String?
+  desc             String
   castrated        Boolean
   breed            String
   arrivedDate      DateTime      @db.Date
   Service_point    Service_point @relation(fields: [service_point_id], references: [id])
   service_point_id Int
+  User             User          @relation(fields: [user_id], references: [id])
+  user_id          Int
 
   @@map("animals")
 }

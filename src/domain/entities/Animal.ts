@@ -1,3 +1,5 @@
+import { EntitieValidationError } from "./errors/Entitie-validation-error";
+
 export enum specieAnimal {
   CAT = 1,
   DOG = 2,
@@ -21,12 +23,17 @@ export class Animal {
 
   set setWeight(weight: number) {
     if (weight <= 0)
-      throw new Error("Weight cannot be less than or equal to 0.");
+      throw new EntitieValidationError(
+        "Weight cannot be less than or equal to 0."
+      );
     else this.propsAnimal.weight = weight;
   }
 
   set setAge(age: number) {
-    if (age <= 0) throw new Error("Age cannot be less than or equal to 0.");
+    if (age <= 0)
+      throw new EntitieValidationError(
+        "Age cannot be less than or equal to 0."
+      );
     else this.propsAnimal.approxAge = age;
   }
 

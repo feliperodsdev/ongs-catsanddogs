@@ -16,7 +16,7 @@ export default class HttpResponse {
   }
   static unauthorized(msg: string) {
     return {
-      statusCode: 403,
+      statusCode: 401,
       body: {
         data: msg,
       },

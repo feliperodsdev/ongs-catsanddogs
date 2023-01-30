@@ -1,4 +1,4 @@
-import { ICreateAnAnimalParams } from "../../domain/services/createAnAnimalParams";
+import { ICreateAnAnimalParams } from "../../domain/services/interfaces/createAnAnimalParams";
 import { ICreateAnAnimalService } from "../../domain/services/interfaces/services/createAnAnimal";
 import HttpResponse from "../helpers/Http-response";
 

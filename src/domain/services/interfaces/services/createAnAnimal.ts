@@ -1,4 +1,4 @@
-import { ICreateAnAnimalParams } from "../../createAnAnimalParams";
+import { ICreateAnAnimalParams } from "../createAnAnimalParams";
 
 export interface ICreateAnAnimalService {
   create(params: ICreateAnAnimalParams): Promise<void>;

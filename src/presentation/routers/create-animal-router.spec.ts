@@ -1,6 +1,6 @@
 import { Cat } from "../../domain/entities/Cat";
 import { Dog } from "../../domain/entities/Dog";
-import { ICreateAnAnimalParams } from "../../domain/services/createAnAnimalParams";
+import { ICreateAnAnimalParams } from "../../domain/services/interfaces/createAnAnimalParams";
 import { ICreateAnAnimalService } from "../../domain/services/interfaces/services/createAnAnimal";
 import { CreateAnAnimalRouter } from "./Create-Animal-Router";
 

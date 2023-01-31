@@ -48,6 +48,7 @@ model Animal {
   service_point_id Int
   User             User          @relation(fields: [user_id], references: [id])
   user_id          Int
+  approxAge         Int
 
   @@map("animals")
 }

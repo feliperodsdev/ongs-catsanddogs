@@ -1,5 +1,5 @@
-import { ICreateAnAnimalParams } from "../../../domain/services/interfaces/createAnAnimalParams";
+import { ICreateAnAnimalParamsRepository } from "../Prisma-CreateAn-Animal";
 
 export interface ICreateAnAnimalRepository {
-  create(params: ICreateAnAnimalParams): Promise<void>;
+  create(params: ICreateAnAnimalParamsRepository): Promise<void>;
 }

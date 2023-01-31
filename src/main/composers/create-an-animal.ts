@@ -1,4 +1,4 @@
-import { CreateAnAnimalService } from "../../domain/services/CreateAnAnimal-service";
+import { CreateAnAnimalService } from "../../domain/services/Create-an-animal-service";
 import { CreateAnAnimalRepository } from "../../infra/repositories/Prisma-CreateAn-Animal";
 import { LoadServicePointByIdRepository } from "../../infra/repositories/Prisma-Load-ServicePoint-By-Id";
 import { LoadUserByIdRepository } from "../../infra/repositories/Prisma-Load-User-By-Id";

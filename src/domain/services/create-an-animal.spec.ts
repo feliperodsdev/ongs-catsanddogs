@@ -3,7 +3,7 @@ import { UserModel } from "../../infra/models/userModel";
 import { ICreateAnAnimalRepository } from "../../infra/repositories/interfaces/createAnAnimalRepository";
 import { ILoadServicePointByIdRepository } from "../../infra/repositories/interfaces/loadServicePointByIdRepository";
 import { ILoadUserByIdRepository } from "../../infra/repositories/interfaces/loadUserById";
-import { CreateAnAnimalService } from "./CreateAnAnimal-service";
+import { CreateAnAnimalService } from "./Create-an-animal-service";
 import { ICreateAnAnimalParams } from "./interfaces/createAnAnimalParams";
 
 const inMemoryUserDb: UserModel[] = [

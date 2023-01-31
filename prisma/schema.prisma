@@ -49,6 +49,7 @@ model Animal {
   User             User          @relation(fields: [user_id], references: [id])
   user_id          Int
   approxAge         Int
+  adopted           Boolean @default(false)
 
   @@map("animals")
 }

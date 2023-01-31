@@ -18,7 +18,7 @@ export interface ICreateAnAnimalParamsRepository {
 export class CreateAnAnimalRepository implements ICreateAnAnimalRepository {
   async create(params: ICreateAnAnimalParamsRepository): Promise<void> {
     await prisma.animal.create({
-      data: params,
+      data: { ...params, adopted: false },
     });
   }
 }

@@ -48,7 +48,7 @@ const makeSut = () => {
     }
   }
 
-  class LoadUserByUsernameRepositorySpy implements ILoadUserByIdRepository {
+  class LoadUserByIdRepositorySpy implements ILoadUserByIdRepository {
     async load(id: number) {
       let user = null;
       for (let i = 0; i < inMemoryUserDb.length; ++i) {
@@ -58,7 +58,7 @@ const makeSut = () => {
     }
   }
   const sut = new AppendUserServicepointService(
-    new LoadUserByUsernameRepositorySpy(),
+    new LoadUserByIdRepositorySpy(),
     new LoadServicePointByIdSpy(),
     new AppendUserToServicePointRepository()
   );

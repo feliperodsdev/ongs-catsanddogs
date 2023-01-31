@@ -6,7 +6,7 @@ import { CreateAnAnimalRouter } from "./Create-Animal-Router";
 
 const makeSut = () => {
   class CreateAnAnimalServiceSpy implements ICreateAnAnimalService {
-    async create(params: ICreateAnAnimalParams): Promise<void> {
+    async create(params: ICreateAnAnimalParams): Promise<string> {
       let animalToBeCreated;
       const breed = params.breed;
       if (params.specie == 1) {
@@ -19,7 +19,7 @@ const makeSut = () => {
         { ...params, arrivedDate: new Date() },
         { breed: breed }
       );
-      console.log(animalToBeCreated);
+      return "created";
     }
   }
 

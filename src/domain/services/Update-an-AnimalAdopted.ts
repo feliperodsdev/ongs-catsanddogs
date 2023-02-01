@@ -23,8 +23,11 @@ export class UpdateAnAnimalAdoptedService
     const animal = await this.loadAnimalByIdRepository.load(params.animal_id);
     const user = await this.loadUserByIdRepository.load(params.user_id);
 
-    if (!animal || !user) {
+    if (!user) {
       throw new Error();
+    }
+    if (!animal) {
+      return "animalInvalid";
     }
 
     if (animal.service_point_id != user.service_point_id) {

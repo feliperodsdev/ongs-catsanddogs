@@ -16,6 +16,9 @@ export class UpdatedAdoptedAnimalRouter {
       ) {
         return HttpResponse.badRequest("Params or adopted is missing");
       }
+
+      if (isNaN(httpRequest.params.animal_id))
+        return HttpResponse.ok("Invalid ID");
       const user = httpRequest.user;
       if (user.type != 2) {
         return HttpResponse.unauthorized(
@@ -23,7 +26,7 @@ export class UpdatedAdoptedAnimalRouter {
         );
       }
       const paramsUpdate = {
-        animal_id: httpRequest.params.animal_id,
+        animal_id: parseInt(httpRequest.params.animal_id),
         user_id: user.user_id,
         adopted: httpRequest.body.adopted,
       };
@@ -35,6 +38,8 @@ export class UpdatedAdoptedAnimalRouter {
         return HttpResponse.ok(
           "You cannot do this: You are not on same service point of this animal"
         );
+      } else if (responseService == "animalInvalid") {
+        return HttpResponse.ok("Animal not found");
       }
 
       return HttpResponse.ok("Updated");

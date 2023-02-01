@@ -1,4 +1,3 @@
-import { isBooleanObject } from "util/types";
 import { IUpdateAdoptedAnimalService } from "../../domain/services/interfaces/services/updatedAnAnimalService";
 import { IUpdateAnimalParams } from "../../domain/services/interfaces/updatedAnimalParams";
 import { UpdatedAdoptedAnimalRouter } from "./updated-an-animal-adopted";

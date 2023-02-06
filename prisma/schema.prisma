@@ -13,7 +13,6 @@ datasource db {
 model Service_point {
   id           Int           @id @default(autoincrement())
   animals      Animal[]
-  transactions Transaction[]
   user         User[]
   desc         String
   name         String
@@ -54,14 +53,3 @@ model Animal {
   @@map("animals")
 }
 
-model Transaction {
-  id               Int           @id @default(autoincrement())
-  type             Int
-  desc             String?
-  value            Float
-  discharge_date   DateTime      @db.Date
-  Service_point    Service_point @relation(fields: [service_point_id], references: [id])
-  service_point_id Int
-
-  @@map("transactions")
-}
